@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class PhotoBoardService {
     }
 
 
-
+    @Transactional
     public void editPhotoBoard(
             Long boardId,
             PhotoBoardRequestDto photoBoardRequestDto,
@@ -61,7 +62,7 @@ public class PhotoBoardService {
 
         photoBoardRepository.save(modifiedBoard);
     }
-
+    @Transactional
     public List<PhotoBoardResponseDto> findAll() {
 
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
@@ -82,7 +83,7 @@ public class PhotoBoardService {
                 .collect(Collectors.toList()
                 );
     }
-
+    @Transactional
     public PhotoBoard findPhotoBoard(
             Long id
     ) {

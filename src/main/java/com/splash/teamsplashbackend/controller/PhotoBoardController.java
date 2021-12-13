@@ -28,6 +28,8 @@ public class PhotoBoardController {
             @RequestPart(required = false) @Valid MultipartFile multipartFile
     ) {
         // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
+        System.out.println(userDetails.getUser().getName());
+        System.out.println("hi");
         return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile, userDetails.getUser());
     }
 
