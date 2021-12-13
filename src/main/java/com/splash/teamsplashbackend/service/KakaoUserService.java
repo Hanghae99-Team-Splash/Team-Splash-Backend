@@ -2,13 +2,17 @@ package com.splash.teamsplashbackend.service;
 
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.jwtandcors.config.UserDetailsImpl;
-import com.study.jwtandcors.dto.kakao.KakaoUserInfoDto;
-import com.study.jwtandcors.entity.User;
-import com.study.jwtandcors.repository.UserRepository;
+
+import com.splash.teamsplashbackend.config.UserDetailsImpl;
+import com.splash.teamsplashbackend.dto.kakao.KakaoUserInfoDto;
+import com.splash.teamsplashbackend.jwt.JwtProperties;
+import com.splash.teamsplashbackend.model.User;
+import com.splash.teamsplashbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +28,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -38,7 +44,7 @@ public class KakaoUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void kakaoLogin(String code) throws JsonProcessingException {
+    public void kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
@@ -48,7 +54,7 @@ public class KakaoUserService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리
-        forceLogin(kakaoUser);
+        normalLogin(kakaoUser, response);
     }
 
 
@@ -125,7 +131,7 @@ public class KakaoUserService {
                 .orElse(null);
         if (kakaoUser == null) {
 
-            User user = userRepository.findByEmail(kakaoUserInfo.getEmail())
+            User user = userRepository.findByUsername(kakaoUserInfo.getEmail())
                     .orElse(null);
             if(!(user ==null)) {
                 kakaoUser = user;
@@ -146,16 +152,21 @@ public class KakaoUserService {
                 String email = kakaoUserInfo.getEmail();
                 // role: 일반 사용자
 
-                kakaoUser = new User(nickname, encodedPassword, email, kakaoId);
+                kakaoUser = new User(email, encodedPassword, nickname, kakaoId);
             }
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
     }
-    // 4. 강제로그인처리
-    private void forceLogin(User kakaoUser) {
-        UserDetails userDetails = new UserDetailsImpl(kakaoUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    // 4. 토큰발급 로그인 처리
+    private void normalLogin(User kakaoUser, HttpServletResponse response) {
+        UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
+        String jwtToken = JWT.create()
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withClaim("id", userDetails.getUser().getId())
+                .withClaim("email", userDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+
     }
 }

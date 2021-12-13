@@ -5,15 +5,16 @@ import com.splash.teamsplashbackend.utils.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 @NoArgsConstructor
 @Getter
 @Entity
+@Setter
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -46,4 +47,12 @@ public class User {
         this.nickname = nickname;
         this.kakaoId = null;
     }
+
+    public User(String username, String password, String name, Long kakaoId) {
+        this.username = username;
+        this.password = password;
+        this.nickname = name;
+        this.kakaoId = kakaoId;
+    }
+
 }
