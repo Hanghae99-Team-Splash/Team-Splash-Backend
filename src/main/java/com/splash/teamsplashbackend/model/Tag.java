@@ -1,14 +1,12 @@
 package com.splash.teamsplashbackend.model;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
@@ -19,5 +17,11 @@ public class Tag {
     @Id
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String tagname;
+
+    @Builder
+    public Tag(String tagname) {
+        this.tagname = tagname;
+    }
 }
