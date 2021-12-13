@@ -44,9 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
         web
                 .ignoring()
-                .antMatchers("/v2/api-docs", "/configuration/ui",
-                        "/swagger-resources", "/configuration/security",
-                        "/swagger-ui.html", "/webjars/**", "/swagger/**")
                 .antMatchers("/h2-console/**")
                 .antMatchers("/user/join");
     }
@@ -68,6 +65,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/kakao/callback/**").permitAll()
                 .antMatchers("/api/board/**").permitAll()
                 .antMatchers("/api/tag/**").permitAll()
+                // 스웨거
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/webjars").permitAll()
+                .antMatchers("/api/test").permitAll()
+
                 .anyRequest().authenticated();
 
     }
