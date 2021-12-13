@@ -36,5 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
-## AWS S3 ###
-/src/main/resources/aws.yml
+### AWS S3 ###
+src/main/resources/aws.yml
+
+### JWT ###
+src/main/java/com/splash/teamsplashbackend/jwt/JwtProperties.java
