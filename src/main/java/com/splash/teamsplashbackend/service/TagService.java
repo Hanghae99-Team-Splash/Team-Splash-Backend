@@ -35,7 +35,7 @@ public class TagService {
         List<Tag> tags = tagRepository.findAll();
         HashMap<String,List<PhotoBoardResponseDto>> tagMap = new HashMap<>();
         for(Tag t : tags) {
-            String tagName = tag.getTagname();
+            String tagName = t.getTagname();
             List<PhotoBoardResponseDto> photoBoards = photoBoardRepository.findAllByTagname(tagName);
             tagMap.put(tagName, photoBoards);
         }
