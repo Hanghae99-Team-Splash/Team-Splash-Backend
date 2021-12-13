@@ -1,4 +1,71 @@
 package com.splash.teamsplashbackend.controller;
 
+import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
+import com.splash.teamsplashbackend.model.PhotoBoard;
+import com.splash.teamsplashbackend.service.PhotoBoardService;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
 public class PhotoBoardController {
+    private final PhotoBoardService photoBoardService;
+
+
+    @ApiOperation(value = "사진 게시물 등록")
+    @PostMapping("/api/board")
+    public Long photoBoardUpload(
+//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestPart @Valid PhotoBoardRequestDto photoBoardRequestDto,
+            @RequestPart(required = false) @Valid MultipartFile multipartFile
+    ) {
+        // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
+        return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile);
+    }
+
+    @ApiOperation(value = "사진 게시물 수정")
+    @PutMapping("/api/board/edit/{id}")
+    public void photoBoardEdit(
+//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id,
+            @RequestPart PhotoBoardRequestDto photoBoardRequestDto
+    ) {
+        // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
+        photoBoardService.editPhotoBoard(id,photoBoardRequestDto);
+    }
+
+    @ApiOperation(value = "전체 게시글 조회")
+    @GetMapping("/api/board")
+    public List<PhotoBoard> photoBoardGetList(
+
+    ) {
+        // 페이징 기능 구현 필요
+        return photoBoardService.findAllPaging();
+    }
+
+    @ApiOperation(value = "게시글 상세 조회")
+    @GetMapping("/api/board/detail/{id}")
+    public PhotoBoard photoBoardGetDetail(
+            @PathVariable Long id
+    ) {
+        return photoBoardService.findPhotoBoard(id);
+    }
+
+    @ApiOperation(value = "게시글 삭제")
+    @DeleteMapping("/api/board/detail/{id}")
+    public void photoBoardDelete(
+//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id
+    ) {
+        photoBoardService.deletePhotoBoard(id);
+    }
+
+
 }
