@@ -1,12 +1,13 @@
 package com.splash.teamsplashbackend.controller;
 
+import com.splash.teamsplashbackend.config.UserDetailsImpl;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
+import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.service.PhotoBoardService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,32 +23,29 @@ public class PhotoBoardController {
     @ApiOperation(value = "사진 게시물 등록")
     @PostMapping("/api/board")
     public Long photoBoardUpload(
-//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestPart @Valid PhotoBoardRequestDto photoBoardRequestDto,
             @RequestPart(required = false) @Valid MultipartFile multipartFile
     ) {
         // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
-        return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile);
+        return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile, userDetails.getUser());
     }
 
     @ApiOperation(value = "사진 게시물 수정")
     @PutMapping("/api/board/edit/{id}")
     public void photoBoardEdit(
-//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
             @RequestPart PhotoBoardRequestDto photoBoardRequestDto
     ) {
         // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
-        photoBoardService.editPhotoBoard(id,photoBoardRequestDto);
+        photoBoardService.editPhotoBoard(id,photoBoardRequestDto, userDetails.getUser());
     }
 
     @ApiOperation(value = "전체 게시글 조회")
-    @GetMapping("/api/board")
-    public List<PhotoBoard> photoBoardGetList(
-
-    ) {
-        // 페이징 기능 구현 필요
-        return photoBoardService.findAllPaging();
+    @GetMapping("/api/main")
+    public List<PhotoBoardResponseDto> photoBoardGetList() {
+        return photoBoardService.findAll();
     }
 
     @ApiOperation(value = "게시글 상세 조회")
@@ -61,10 +59,10 @@ public class PhotoBoardController {
     @ApiOperation(value = "게시글 삭제")
     @DeleteMapping("/api/board/detail/{id}")
     public void photoBoardDelete(
-//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id
     ) {
-        photoBoardService.deletePhotoBoard(id);
+        photoBoardService.deletePhotoBoard(id, userDetails.getUser().getId());
     }
 
 
