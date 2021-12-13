@@ -1,4 +1,7 @@
 package com.splash.teamsplashbackend.repository;
 
-public interface PhotoBoardRepository {
+import com.splash.teamsplashbackend.model.PhotoBoard;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PhotoBoardRepository extends JpaRepository<PhotoBoard,Long> {
 }
