@@ -2,6 +2,9 @@ package com.splash.teamsplashbackend.config;
 
 
 import com.splash.teamsplashbackend.jwt.JwtAuthenticationFilter;
+
+import com.splash.teamsplashbackend.jwt.JwtVerificationFilter;
+import com.splash.teamsplashbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -23,7 +26,7 @@ import org.springframework.web.filter.CorsFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
-
+    private final UserRepository userRepository;
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
@@ -55,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(corsFilter, SecurityContextPersistenceFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), userDetailsService()), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new JwtVerificationFilter(authenticationManager(),userRepository))
                 .formLogin().disable()
                 .httpBasic().disable()
                 .headers().frameOptions().disable()
