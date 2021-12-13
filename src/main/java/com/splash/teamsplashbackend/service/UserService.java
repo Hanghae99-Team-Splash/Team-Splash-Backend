@@ -5,12 +5,14 @@ import com.splash.teamsplashbackend.dto.user.SignupRequestDto;
 
 import com.splash.teamsplashbackend.model.User;
 import com.splash.teamsplashbackend.repository.UserRepository;
+import com.splash.teamsplashbackend.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -22,16 +24,20 @@ public class UserService {
     //회원가입처리
     public String joinProcess(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
-        String password = passwordEncoder.encode(signupRequestDto.getPassword());
+        String password = signupRequestDto.getPassword();
         String name = signupRequestDto.getName();
         String nickname = signupRequestDto.getNickname();
+        //회원가입 빈 값 금지
+        UserValidator.checkNull(username, password, name, nickname);
         Optional<User>foundEmail = userRepository.findByUsername(username);
-        if(foundEmail.isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다");
-        }
+        //이메일 중복검사
+        UserValidator.checkEmail(foundEmail);
+        password = passwordEncoder.encode(signupRequestDto.getPassword());
         User user = new User(username, password, name, nickname);
         userRepository.save(user);
-        return "회원가입이 완료되었습니다";
+        return "Success Join";
     }
+
+
 
 }
