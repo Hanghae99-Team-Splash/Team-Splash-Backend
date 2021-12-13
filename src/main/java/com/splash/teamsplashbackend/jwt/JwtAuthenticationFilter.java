@@ -3,6 +3,8 @@ package com.splash.teamsplashbackend.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.splash.teamsplashbackend.config.UserDetailsImpl;
+import com.splash.teamsplashbackend.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,8 +26,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             User user = objectMapper.readValue(request.getInputStream(), User.class);
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String jwtToken = JWT.create()
                 .withExpiresAt(new Date(System.currentTimeMillis() +JwtProperties.EXPIRATION_TIME))
                 .withClaim("id", userDetails.getUser().getId())
-                .withClaim("username", userDetails.getUser().getUsername())
+                .withClaim("email", userDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
 

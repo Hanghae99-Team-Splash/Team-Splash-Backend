@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-## AWS S3 ###
-/src/main/resources/aws.yml
+### AWS S3 ###
+src/main/resources/aws.yml

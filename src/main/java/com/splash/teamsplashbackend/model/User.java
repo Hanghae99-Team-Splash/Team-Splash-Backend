@@ -20,7 +20,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -29,7 +29,8 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private String username;
+    private String nickname;
+
 
     @Column(unique = true)
     private Long kakaoId;
@@ -38,11 +39,11 @@ public class User {
 //    List<PhotoBoard> photoBoards = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String username){
-        this.email = email;
+    public User(String username, String password, String name, String nickname){
+        this.username = username;
         this.password = password;
         this.name = name;
-        this.username = username;
+        this.nickname = nickname;
         this.kakaoId = null;
     }
 }
