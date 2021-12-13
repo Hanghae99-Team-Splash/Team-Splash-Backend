@@ -35,11 +35,9 @@ public class PhotoBoard extends Timestamped {
     @Column(nullable = false)
     private String tagname;
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public void update(PhotoBoardRequestDto photoBoardRequestDto) {
         this.location = photoBoardRequestDto.getLocation();
