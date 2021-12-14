@@ -43,7 +43,7 @@ public class TagService {
             String tagName = t.getTagname();
             List<PhotoBoard> photoBoards = photoBoardRepository.findAllByTagname(tagName);
             for(int i=0; i<photoBoards.size(); i++) {
-                photoBoardResponseDtos.add(photoBoards.get(i).toEntity());
+                photoBoardResponseDtos.add(photoBoards.get(i).toDto());
             }
             tagMap.put(tagName, photoBoardResponseDtos);
         }

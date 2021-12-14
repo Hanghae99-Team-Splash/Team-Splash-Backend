@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PhotoBoardRepository extends JpaRepository<PhotoBoard,Long> {
     List<PhotoBoard> findAllByTagname(String tagname);
-
+    List<PhotoBoard> findAllByUserId(Long userId);
     @Modifying
     @Query("update PhotoBoard b set b.views = b.views + 1 where b.id = :id")
     int updateView(Long id);

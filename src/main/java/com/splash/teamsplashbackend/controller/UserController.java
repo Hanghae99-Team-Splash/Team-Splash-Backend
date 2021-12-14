@@ -2,15 +2,19 @@ package com.splash.teamsplashbackend.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.splash.teamsplashbackend.config.UserDetailsImpl;
+import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.dto.user.UserRequestDto;
 import com.splash.teamsplashbackend.dto.user.UserResponseDto;
 import com.splash.teamsplashbackend.service.KakaoUserService;
 import com.splash.teamsplashbackend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

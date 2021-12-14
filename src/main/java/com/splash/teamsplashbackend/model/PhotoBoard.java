@@ -63,7 +63,7 @@ public class PhotoBoard extends Timestamped {
 
 
 
-    public PhotoBoardResponseDto toEntity() {
+    public PhotoBoardResponseDto toDto() {
         return PhotoBoardResponseDto.builder()
                 .boardId(id)
                 .userId(user.getId())
