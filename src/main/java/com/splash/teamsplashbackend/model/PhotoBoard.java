@@ -2,11 +2,9 @@ package com.splash.teamsplashbackend.model;
 
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
+import com.splash.teamsplashbackend.utils.TimeCalculator;
 import com.splash.teamsplashbackend.utils.Timestamped;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,6 +34,9 @@ public class PhotoBoard extends Timestamped {
 
     @ColumnDefault("0")
     private int views;
+
+    @Column
+    private int likeCnt;
 
     @Column(nullable = false)
     private String tagname;
@@ -56,9 +58,7 @@ public class PhotoBoard extends Timestamped {
         this.description = photoBoardRequestDto.getDescription();
     }
 
-    public void updateViews(PhotoBoard photoBoard) {
-        this.views = photoBoard.getViews() + 1;
-    }
+
 
     public PhotoBoardResponseDto toEntity() {
         return PhotoBoardResponseDto.builder()
@@ -68,8 +68,9 @@ public class PhotoBoard extends Timestamped {
                 .nickname(user.getNickname())
                 .location(location)
                 .tagname(tagname)
+                .likeCnt(likeCnt)
                 .description(description)
-                .modifiedAt(modifiedAt.toString())
+                .modifiedAt(TimeCalculator.timecalculator(modifiedAt))
                 .build();
     }
 }

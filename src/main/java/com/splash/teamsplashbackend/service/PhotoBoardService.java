@@ -79,7 +79,8 @@ public class PhotoBoardService {
                                 s.getUser().getNickname(),
                                 s.getDescription(),
                                 TimeCalculator.timecalculator(s.getModifiedAt()),
-                                s.getViews()
+                                s.getViews(),
+                                s.getLikeCnt()
                         )
                 )
                 .collect(Collectors.toList()
@@ -94,7 +95,8 @@ public class PhotoBoardService {
                         () -> new NullPointerException("찾으려는 게시글이 없습니다.")
                 );
 
-        photoBoard.updateViews(photoBoard);
+//        photoBoard.setViews(photoBoard.getViews() + 1);
+        photoBoardRepository.updateView(id);
 
         // To Do : nicknname 이 안나옴
         return PhotoBoardResponseDto.builder()
@@ -107,6 +109,7 @@ public class PhotoBoardService {
                 .description(photoBoard.getDescription())
                 .modifiedAt(TimeCalculator.timecalculator(photoBoard.getModifiedAt()))
                 .views(photoBoard.getViews())
+                .likeCnt(photoBoard.getLikeCnt())
                 .build();
     }
 

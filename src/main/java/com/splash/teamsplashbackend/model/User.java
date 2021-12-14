@@ -1,7 +1,6 @@
 package com.splash.teamsplashbackend.model;
 
 
-import com.splash.teamsplashbackend.utils.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,9 +35,12 @@ public class User {
 
     @Column(unique = true)
     private Long kakaoId;
-//  photoboard랑 매핑할 것
+
     @OneToMany(mappedBy = "user")
     List<PhotoBoard> photoBoards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Likes> likes = new ArrayList<>();
 
     @Builder
     public User(String username, String password, String name, String nickname){

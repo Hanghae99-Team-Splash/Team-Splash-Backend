@@ -18,6 +18,7 @@ public class PhotoBoardResponseDto {
     private String description;
     private String modifiedAt;
     private int views;
+    private int likeCnt;
 
 
 

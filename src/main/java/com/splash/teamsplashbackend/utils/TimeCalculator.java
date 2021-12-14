@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class TimeCalculator {
     public static String timecalculator(LocalDateTime modifiedAt) {
         long timeDifference = Duration.between(modifiedAt, LocalDateTime.now()).getSeconds();
-        String calculation = "";
+        String calculation;
         if ((timeDifference / 60 / 60 / 24) > 0) {
             calculation = timeDifference / 60 / 60 / 24 + "days ago";
         }
