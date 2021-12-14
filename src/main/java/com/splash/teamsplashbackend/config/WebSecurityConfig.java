@@ -3,7 +3,6 @@ package com.splash.teamsplashbackend.config;
 
 import com.splash.teamsplashbackend.jwt.JwtAuthenticationFilter;
 import com.splash.teamsplashbackend.jwt.JwtTokenProvider;
-import com.splash.teamsplashbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -48,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-resources", "/configuration/security",
                         "/swagger-ui.html", "/webjars/**", "/swagger/**")
                 .antMatchers("/h2-console/**")
+                .antMatchers("/favicon.ico")
                 .antMatchers("/user/**");
     }
 
