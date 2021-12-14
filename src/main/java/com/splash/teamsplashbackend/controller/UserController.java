@@ -17,6 +17,7 @@ public class UserController {
     private final UserService userService;
     private final KakaoUserService kakaoUserService;
 
+
     //회원가입
     @ApiOperation(value = "회원가입")
     @PostMapping("/user/join")
@@ -31,5 +32,12 @@ public class UserController {
         kakaoUserService.kakaoLogin(code, response);
     }
 
+    //로그인 성공
+    @ApiOperation(value = "로그인")
+    @PostMapping("/user/login")
+    public String login(@RequestBody SignupRequestDto requestDto, HttpServletResponse response) {
+        userService.loginProcess(requestDto, response);
+        return "Suceess Login";
+    }
 
 }
