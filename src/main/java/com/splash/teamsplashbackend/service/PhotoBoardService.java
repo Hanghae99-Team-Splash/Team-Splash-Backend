@@ -34,7 +34,7 @@ public class PhotoBoardService {
 
 //        String imageUrl = s3Uploader.upload(multipartFile, imageDirName);
         PhotoBoard post = PhotoBoard.builder()
-                        .img("imageUrl 수정 필요")
+                        .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
                         .location(photoBoardRequestDto.getLocation())
                         .description(photoBoardRequestDto.getLocation())
                         .tagname(photoBoardRequestDto.getTagname())
@@ -98,7 +98,6 @@ public class PhotoBoardService {
 //        photoBoard.setViews(photoBoard.getViews() + 1);
         photoBoardRepository.updateView(id);
 
-        // To Do : nicknname 이 안나옴
         return PhotoBoardResponseDto.builder()
                 .boardId(photoBoard.getId())
                 .userId(photoBoard.getUser().getId())
