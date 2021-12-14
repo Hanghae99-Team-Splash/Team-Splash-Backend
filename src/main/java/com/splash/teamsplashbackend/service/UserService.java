@@ -3,6 +3,7 @@ package com.splash.teamsplashbackend.service;
 
 import com.splash.teamsplashbackend.dto.user.UserRequestDto;
 
+import com.splash.teamsplashbackend.dto.user.UserResponseDto;
 import com.splash.teamsplashbackend.jwt.JwtProperties;
 import com.splash.teamsplashbackend.model.User;
 import com.splash.teamsplashbackend.repository.UserRepository;
@@ -39,13 +40,17 @@ public class UserService {
         return "Success Join";
     }
     //로그인 처리
-    public void loginProcess(UserRequestDto requestDto, HttpServletResponse response) {
+    public UserResponseDto loginProcess(UserRequestDto requestDto, HttpServletResponse response) {
         User user = userRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 username 입니다."));
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenProvider.createToken(user.getUsername(), Long.toString(user.getId())));
+        return UserResponseDto.builder()
+                .nickname(user.getNickname())
+                .userId(user.getId())
+                .build();
     }
 
 

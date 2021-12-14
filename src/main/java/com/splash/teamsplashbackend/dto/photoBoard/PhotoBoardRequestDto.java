@@ -12,4 +12,5 @@ public class PhotoBoardRequestDto {
     private String location;
     private String tagname;
     private String description;
+    private String size;
 }

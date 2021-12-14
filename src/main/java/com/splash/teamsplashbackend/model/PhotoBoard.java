@@ -45,6 +45,9 @@ public class PhotoBoard extends Timestamped {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column
+    private String size;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -70,6 +73,7 @@ public class PhotoBoard extends Timestamped {
                 .tagname(tagname)
                 .likeCnt(likeCnt)
                 .description(description)
+                .size(size)
                 .modifiedAt(TimeCalculator.timecalculator(modifiedAt))
                 .build();
     }

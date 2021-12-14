@@ -3,6 +3,7 @@ package com.splash.teamsplashbackend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.splash.teamsplashbackend.dto.user.UserRequestDto;
+import com.splash.teamsplashbackend.dto.user.UserResponseDto;
 import com.splash.teamsplashbackend.service.KakaoUserService;
 import com.splash.teamsplashbackend.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -28,16 +29,15 @@ public class UserController {
     //카카오 회원가입 및 로그인 요청 처리
     @ApiOperation(value = "카카오톡 로그인")
     @GetMapping("/user/kakao/callback")
-    public void kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        kakaoUserService.kakaoLogin(code, response);
+    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        return kakaoUserService.kakaoLogin(code, response);
     }
 
     //로그인 성공
     @ApiOperation(value = "로그인")
     @PostMapping("/user/login")
-    public String login(@RequestBody UserRequestDto requestDto, HttpServletResponse response) {
-        userService.loginProcess(requestDto, response);
-        return "Suceess Login";
+    public UserResponseDto login(@RequestBody UserRequestDto requestDto, HttpServletResponse response) {
+        return userService.loginProcess(requestDto, response);
     }
 
 }

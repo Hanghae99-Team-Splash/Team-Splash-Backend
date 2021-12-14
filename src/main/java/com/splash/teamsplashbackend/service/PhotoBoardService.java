@@ -36,9 +36,10 @@ public class PhotoBoardService {
         PhotoBoard post = PhotoBoard.builder()
                         .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
                         .location(photoBoardRequestDto.getLocation())
-                        .description(photoBoardRequestDto.getLocation())
+                        .description(photoBoardRequestDto.getDescription())
                         .tagname(photoBoardRequestDto.getTagname())
                         .user(user)
+                        .size(photoBoardRequestDto.getSize())
                         .build();
         photoBoardRepository.save(post);
 
@@ -78,6 +79,7 @@ public class PhotoBoardService {
                                 s.getTagname(),
                                 s.getUser().getNickname(),
                                 s.getDescription(),
+                                s.getSize(),
                                 TimeCalculator.timecalculator(s.getModifiedAt()),
                                 s.getViews(),
                                 s.getLikeCnt()
@@ -106,6 +108,7 @@ public class PhotoBoardService {
                 .location(photoBoard.getLocation())
                 .tagname(photoBoard.getTagname())
                 .description(photoBoard.getDescription())
+                .size(photoBoard.getSize())
                 .modifiedAt(TimeCalculator.timecalculator(photoBoard.getModifiedAt()))
                 .views(photoBoard.getViews())
                 .likeCnt(photoBoard.getLikeCnt())
