@@ -1,12 +1,14 @@
 package com.splash.teamsplashbackend.config;
 
 import com.splash.teamsplashbackend.model.User;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
+@ToString
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;

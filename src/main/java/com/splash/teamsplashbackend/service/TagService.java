@@ -12,6 +12,7 @@ import com.splash.teamsplashbackend.validator.TagValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class TagService {
     private final TagRepository tagRepository;
     private final PhotoBoardRepository photoBoardRepository;
     //태그 저장
+    @Transactional
     public void saveTag(TagRequestDto tagRequestDto) {
         List<Tag> tags = tagRepository.findAll();
         TagValidator.checkTagName(tagRequestDto, tags);
@@ -28,6 +30,7 @@ public class TagService {
     }
 
     //태그 해당하는 게시물들 가져오기
+    @Transactional
     public TagResponseDto takeSpecificTagBoards(Long tagid) {
         Tag tag = tagRepository.findById(tagid).orElseThrow(
                 ()->new IllegalArgumentException("찾으시는 태그가 없습니다"));
