@@ -3,7 +3,6 @@ package com.splash.teamsplashbackend.controller;
 import com.splash.teamsplashbackend.config.UserDetailsImpl;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
-import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.service.PhotoBoardService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,6 @@ public class PhotoBoardController {
             @RequestPart @Valid PhotoBoardRequestDto photoBoardRequestDto,
             @RequestPart(required = false) @Valid MultipartFile multipartFile
     ) {
-        // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
-        System.out.println(userDetails.getUser().getName());
-        System.out.println("hi");
         return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile, userDetails.getUser());
     }
 
@@ -38,9 +34,8 @@ public class PhotoBoardController {
     public void photoBoardEdit(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
-            @RequestPart PhotoBoardRequestDto photoBoardRequestDto
+            @RequestBody PhotoBoardRequestDto photoBoardRequestDto
     ) {
-        // To Do : 로그인 세팅 되면 유저 정보 매개변수로 추가
         photoBoardService.editPhotoBoard(id,photoBoardRequestDto, userDetails.getUser());
     }
 
@@ -52,7 +47,7 @@ public class PhotoBoardController {
 
     @ApiOperation(value = "게시글 상세 조회")
     @GetMapping("/api/board/detail/{id}")
-    public PhotoBoard photoBoardGetDetail(
+    public PhotoBoardResponseDto photoBoardGetDetail(
             @PathVariable Long id
     ) {
         return photoBoardService.findPhotoBoard(id);

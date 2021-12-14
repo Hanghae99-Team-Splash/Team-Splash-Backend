@@ -45,4 +45,7 @@ public class PhotoBoard extends Timestamped {
         this.description = photoBoardRequestDto.getDescription();
     }
 
+    public void updateViews(PhotoBoard photoBoard) {
+        this.views = photoBoard.getViews() + 1;
+    }
 }

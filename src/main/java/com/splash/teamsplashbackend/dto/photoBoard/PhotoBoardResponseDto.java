@@ -12,6 +12,7 @@ public class PhotoBoardResponseDto {
     private Long boardId;
     private Long userId;
     private String img;
+    private String nickname;
     private String location;
     private String tagname;
     private String description;
