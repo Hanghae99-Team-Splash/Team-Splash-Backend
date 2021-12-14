@@ -21,8 +21,8 @@ public class UserController {
     //회원가입
     @ApiOperation(value = "회원가입")
     @PostMapping("/user/join")
-    public String signup(@RequestBody UserRequestDto signupRequestDto) {
-        return userService.joinProcess(signupRequestDto);
+    public String signup(@RequestBody UserRequestDto userRequestDto) {
+        return userService.joinProcess(userRequestDto);
     }
 
     //카카오 회원가입 및 로그인 요청 처리
