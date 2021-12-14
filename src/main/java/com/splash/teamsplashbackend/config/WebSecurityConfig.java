@@ -2,6 +2,8 @@ package com.splash.teamsplashbackend.config;
 
 
 import com.splash.teamsplashbackend.jwt.JwtAuthenticationFilter;
+import com.splash.teamsplashbackend.jwt.JwtTokenProvider;
+import com.splash.teamsplashbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -23,6 +25,7 @@ import org.springframework.web.filter.CorsFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder encodePassword() {
@@ -45,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-resources", "/configuration/security",
                         "/swagger-ui.html", "/webjars/**", "/swagger/**")
                 .antMatchers("/h2-console/**")
-                .antMatchers("/user/join");
+                .antMatchers("/user/**");
     }
 
     @Override
@@ -55,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(corsFilter, SecurityContextPersistenceFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable()
                 .httpBasic().disable()
                 .headers().frameOptions().disable()
@@ -64,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/kakao/callback/**").permitAll()
                 .antMatchers("/api/board/**").permitAll()
                 .antMatchers("/api/tag/**").permitAll()
+                .antMatchers("/api/main").permitAll()
                 .anyRequest().authenticated();
 
     }

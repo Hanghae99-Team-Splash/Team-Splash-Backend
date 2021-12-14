@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class PhotoBoardService {
     }
 
 
-
+    @Transactional
     public void editPhotoBoard(
             Long boardId,
             PhotoBoardRequestDto photoBoardRequestDto,
@@ -61,7 +62,7 @@ public class PhotoBoardService {
 
         photoBoardRepository.save(modifiedBoard);
     }
-
+    @Transactional
     public List<PhotoBoardResponseDto> findAll() {
 
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
@@ -74,6 +75,7 @@ public class PhotoBoardService {
                                 s.getImg(),
                                 s.getLocation(),
                                 s.getTagname(),
+                                s.getUser().getNickname(),
                                 s.getDescription(),
                                 s.getModifiedAt(),
                                 s.getViews()
@@ -82,15 +84,29 @@ public class PhotoBoardService {
                 .collect(Collectors.toList()
                 );
     }
-
-    public PhotoBoard findPhotoBoard(
+    @Transactional
+    public PhotoBoardResponseDto findPhotoBoard(
             Long id
     ) {
         PhotoBoard photoBoard = photoBoardRepository.findById(id)
                 .orElseThrow(
                         () -> new NullPointerException("찾으려는 게시글이 없습니다.")
                 );
-        return photoBoard;
+
+        photoBoard.updateViews(photoBoard);
+
+        // To Do : nicknname 이 안나옴
+        return PhotoBoardResponseDto.builder()
+                .boardId(photoBoard.getId())
+                .userId(photoBoard.getUser().getId())
+                .img(photoBoard.getImg())
+                .nickname(photoBoard.getUser().getNickname())
+                .location(photoBoard.getLocation())
+                .tagname(photoBoard.getTagname())
+                .description(photoBoard.getDescription())
+                .modifiedAt(photoBoard.getModifiedAt())
+                .views(photoBoard.getViews())
+                .build();
     }
 
     public void deletePhotoBoard(

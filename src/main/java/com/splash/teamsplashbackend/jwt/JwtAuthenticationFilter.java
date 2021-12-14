@@ -1,55 +1,33 @@
 package com.splash.teamsplashbackend.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.splash.teamsplashbackend.config.UserDetailsImpl;
-import com.splash.teamsplashbackend.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
-    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            User user = objectMapper.readValue(request.getInputStream(), User.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            return authentication;
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        // 헤더에서 JWT 를 받아옵니다.
+        String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+        // 유효한 토큰인지 확인합니다.
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            // 토큰이 유효하면 토큰으로부터 유저 정보를 받아옵니다.
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            // SecurityContext 에 Authentication 객체를 저장합니다.
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        return null;
-    }
-
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
-            throws IOException, ServletException {
-        UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
-
-        String jwtToken = JWT.create()
-                .withExpiresAt(new Date(System.currentTimeMillis() +JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", userDetails.getUser().getId())
-                .withClaim("email", userDetails.getUser().getUsername())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
-
+        chain.doFilter(request, response);
     }
 }
