@@ -166,7 +166,7 @@ public class KakaoUserService {
                 .withClaim("id", userDetails.getUser().getId())
                 .withClaim("email", userDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
 
     }
 }

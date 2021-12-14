@@ -75,6 +75,7 @@ public class PhotoBoardService {
                                 s.getImg(),
                                 s.getLocation(),
                                 s.getTagname(),
+                                s.getUser().getNickname(),
                                 s.getDescription(),
                                 s.getModifiedAt(),
                                 s.getViews()
@@ -84,14 +85,28 @@ public class PhotoBoardService {
                 );
     }
     @Transactional
-    public PhotoBoard findPhotoBoard(
+    public PhotoBoardResponseDto findPhotoBoard(
             Long id
     ) {
         PhotoBoard photoBoard = photoBoardRepository.findById(id)
                 .orElseThrow(
                         () -> new NullPointerException("찾으려는 게시글이 없습니다.")
                 );
-        return photoBoard;
+
+        photoBoard.updateViews(photoBoard);
+
+        // To Do : nicknname 이 안나옴
+        return PhotoBoardResponseDto.builder()
+                .boardId(photoBoard.getId())
+                .userId(photoBoard.getUser().getId())
+                .img(photoBoard.getImg())
+                .nickname(photoBoard.getUser().getNickname())
+                .location(photoBoard.getLocation())
+                .tagname(photoBoard.getTagname())
+                .description(photoBoard.getDescription())
+                .modifiedAt(photoBoard.getModifiedAt())
+                .views(photoBoard.getViews())
+                .build();
     }
 
     public void deletePhotoBoard(
