@@ -5,6 +5,7 @@ import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.model.User;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
+import com.splash.teamsplashbackend.utils.TimeCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,7 @@ public class PhotoBoardService {
                                 s.getTagname(),
                                 s.getUser().getNickname(),
                                 s.getDescription(),
-                                s.getModifiedAt(),
+                                TimeCalculator.timecalculator(s.getModifiedAt()),
                                 s.getViews()
                         )
                 )
@@ -104,7 +105,7 @@ public class PhotoBoardService {
                 .location(photoBoard.getLocation())
                 .tagname(photoBoard.getTagname())
                 .description(photoBoard.getDescription())
-                .modifiedAt(photoBoard.getModifiedAt())
+                .modifiedAt(TimeCalculator.timecalculator(photoBoard.getModifiedAt()))
                 .views(photoBoard.getViews())
                 .build();
     }

@@ -60,16 +60,6 @@ public class PhotoBoard extends Timestamped {
         this.views = photoBoard.getViews() + 1;
     }
 
-
-//    private Long boardId;
-//    private Long userId;
-//    private String img;
-//    private String nickname;
-//    private String location;
-//    private String tagname;
-//    private String description;
-//    private LocalDateTime modifiedAt;
-//    private int views;
     public PhotoBoardResponseDto toEntity() {
         return PhotoBoardResponseDto.builder()
                 .boardId(id)
@@ -79,7 +69,7 @@ public class PhotoBoard extends Timestamped {
                 .location(location)
                 .tagname(tagname)
                 .description(description)
-                .modifiedAt(modifiedAt)
+                .modifiedAt(modifiedAt.toString())
                 .build();
     }
 }
