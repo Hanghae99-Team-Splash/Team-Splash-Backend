@@ -1,7 +1,7 @@
 package com.splash.teamsplashbackend.service;
 
 
-import com.splash.teamsplashbackend.dto.user.SignupRequestDto;
+import com.splash.teamsplashbackend.dto.user.UserRequestDto;
 
 import com.splash.teamsplashbackend.jwt.JwtProperties;
 import com.splash.teamsplashbackend.model.User;
@@ -23,23 +23,23 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     //회원가입처리
     @Transactional
-    public String joinProcess(SignupRequestDto signupRequestDto) {
-        String username = signupRequestDto.getUsername();
-        String password = signupRequestDto.getPassword();
-        String name = signupRequestDto.getName();
-        String nickname = signupRequestDto.getNickname();
+    public String joinProcess(UserRequestDto userRequestDto) {
+        String username = userRequestDto.getUsername();
+        String password = userRequestDto.getPassword();
+        String name = userRequestDto.getName();
+        String nickname = userRequestDto.getNickname();
         //회원가입 빈 값 금지
         UserValidator.checkNull(username, password, name, nickname);
         Optional<User>foundEmail = userRepository.findByUsername(username);
         //이메일 중복검사
         UserValidator.checkEmail(foundEmail);
-        password = passwordEncoder.encode(signupRequestDto.getPassword());
+        password = passwordEncoder.encode(userRequestDto.getPassword());
         User user = new User(username, password, name, nickname);
         userRepository.save(user);
         return "Success Join";
     }
     //로그인 처리
-    public void loginProcess(SignupRequestDto requestDto, HttpServletResponse response) {
+    public void loginProcess(UserRequestDto requestDto, HttpServletResponse response) {
         User user = userRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 username 입니다."));
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {

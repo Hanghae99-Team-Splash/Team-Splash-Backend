@@ -95,7 +95,6 @@ public class PhotoBoardService {
 
         photoBoard.updateViews(photoBoard);
 
-        // To Do : nicknname 이 안나옴
         return PhotoBoardResponseDto.builder()
                 .boardId(photoBoard.getId())
                 .userId(photoBoard.getUser().getId())
