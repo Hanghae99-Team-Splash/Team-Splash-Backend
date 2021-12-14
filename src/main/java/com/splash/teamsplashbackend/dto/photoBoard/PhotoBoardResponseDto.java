@@ -16,6 +16,7 @@ public class PhotoBoardResponseDto {
     private String location;
     private String tagname;
     private String description;
+    private String size;
     private String modifiedAt;
     private int views;
     private int likeCnt;

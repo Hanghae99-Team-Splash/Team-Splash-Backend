@@ -62,5 +62,17 @@ public class PhotoBoardController {
         photoBoardService.deletePhotoBoard(id, userDetails.getUser().getId());
     }
 
+    //유저가 쓴 게시글 목록 가져오기
+    @ApiOperation(value = "유저가 쓴 게시글 목록 가져오기")
+    @GetMapping("/api/user/mypage/boardlist")
+    public List<PhotoBoardResponseDto> getUserPhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return photoBoardService.findUserBoardList(userDetails);
+    }
 
+    //내가 좋아요 누른 목록 가져오기
+    @ApiOperation(value = "유저가 좋아요 누른 목록 가져오기")
+    @GetMapping("/api/user/mypage/likelist")
+    public List<PhotoBoardResponseDto> getUserLikePhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return photoBoardService.findUserLikePhotoBoardList(userDetails);
+    }
 }

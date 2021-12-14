@@ -1,24 +1,32 @@
 package com.splash.teamsplashbackend.service;
 
+import com.splash.teamsplashbackend.config.UserDetailsImpl;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
+import com.splash.teamsplashbackend.model.Likes;
 import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.model.User;
+import com.splash.teamsplashbackend.repository.LikeRepository;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
 import com.splash.teamsplashbackend.utils.TimeCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PhotoBoardService {
     private final PhotoBoardRepository photoBoardRepository;
+    private final LikeRepository likeRepository;
 //    private final S3Uploader s3Uploader;
 
 //    private final String imageDirName = "static";
@@ -36,9 +44,10 @@ public class PhotoBoardService {
         PhotoBoard post = PhotoBoard.builder()
                         .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
                         .location(photoBoardRequestDto.getLocation())
-                        .description(photoBoardRequestDto.getLocation())
+                        .description(photoBoardRequestDto.getDescription())
                         .tagname(photoBoardRequestDto.getTagname())
                         .user(user)
+                        .size(photoBoardRequestDto.getSize())
                         .build();
         photoBoardRepository.save(post);
 
@@ -78,6 +87,7 @@ public class PhotoBoardService {
                                 s.getTagname(),
                                 s.getUser().getNickname(),
                                 s.getDescription(),
+                                s.getSize(),
                                 TimeCalculator.timecalculator(s.getModifiedAt()),
                                 s.getViews(),
                                 s.getLikeCnt()
@@ -106,6 +116,7 @@ public class PhotoBoardService {
                 .location(photoBoard.getLocation())
                 .tagname(photoBoard.getTagname())
                 .description(photoBoard.getDescription())
+                .size(photoBoard.getSize())
                 .modifiedAt(TimeCalculator.timecalculator(photoBoard.getModifiedAt()))
                 .views(photoBoard.getViews())
                 .likeCnt(photoBoard.getLikeCnt())
@@ -126,4 +137,34 @@ public class PhotoBoardService {
 
         photoBoardRepository.deleteById(boardId);
     }
+    // 유저가 쓴 게시물 목록 가져오기 메소드
+    @Transactional
+    public List<PhotoBoardResponseDto> findUserBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
+        List<PhotoBoard> photoBoards= photoBoardRepository.findAllByUserId(userDetails.getUser().getId());
+        for(PhotoBoard photoBoard : photoBoards) {
+            photoBoardResponseDtos.add(photoBoard.toDto());
+        }
+        return photoBoardResponseDtos;
+
+    }
+
+    // 유저가 좋아요 한 목록 가져오기 메소드
+    @Transactional
+    public List<PhotoBoardResponseDto> findUserLikePhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
+        List<Likes> likes = likeRepository.findAllByUser(userDetails.getUser());
+        HashMap<Long,Long> likeIdMap = new HashMap<>();
+        for(Likes like : likes) {
+            Long likeId = like.getId();
+            Long likeBoardId = like.getBoardId();
+            likeIdMap.put(likeId, likeBoardId);
+            PhotoBoard photoBoard = photoBoardRepository.findById(likeIdMap.get(likeId)).orElseThrow(
+                    ()-> new IllegalArgumentException("해당 게시물이 없습니다"));
+            photoBoardResponseDtos.add(photoBoard.toDto());
+        }
+        return photoBoardResponseDtos;
+    }
+
+
 }
