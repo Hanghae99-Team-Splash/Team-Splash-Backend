@@ -19,4 +19,6 @@ public class PhotoBoardResponseDto {
     private LocalDateTime modifiedAt;
     private int views;
 
+
+
 }

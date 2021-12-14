@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,11 +37,15 @@ public class TagService {
                 ()->new IllegalArgumentException("찾으시는 태그가 없습니다"));
         String tagname = tag.getTagname();
         List<Tag> tags = tagRepository.findAll();
+        List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         HashMap<String,List<PhotoBoardResponseDto>> tagMap = new HashMap<>();
         for(Tag t : tags) {
             String tagName = t.getTagname();
-            List<PhotoBoardResponseDto> photoBoards = photoBoardRepository.findAllByTagname(tagName);
-            tagMap.put(tagName, photoBoards);
+            List<PhotoBoard> photoBoards = photoBoardRepository.findAllByTagname(tagName);
+            for(int i=0; i<photoBoards.size(); i++) {
+                photoBoardResponseDtos.add(photoBoards.get(i).toEntity());
+            }
+            tagMap.put(tagName, photoBoardResponseDtos);
         }
         return TagResponseDto.builder()
                 .tagname(tagname)

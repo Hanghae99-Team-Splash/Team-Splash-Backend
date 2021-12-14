@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PhotoBoardRepository extends JpaRepository<PhotoBoard,Long> {
-    List<PhotoBoardResponseDto> findAllByTagname(String tagname);
+    List<PhotoBoard> findAllByTagname(String tagname);
 
 
 }
