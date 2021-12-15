@@ -10,7 +10,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -97,8 +96,8 @@ class UserTest {
             @DisplayName("회원 Id")
             class userId {
                 @Test
-                @DisplayName("null")
-                void fail() {
+                @DisplayName("빈 값")
+                void userIdIsEmpty() {
                     username = "";
 
                     UserRequestDto userRequestDto = new UserRequestDto(
@@ -137,8 +136,8 @@ class UserTest {
             }
 
             @Test
-            @DisplayName("비밀번호 null")
-            void passwordNull() {
+            @DisplayName("비밀번호 빈 값")
+            void passwordIsEmpty() {
                 password = "";
 
                 UserRequestDto userRequestDto = new UserRequestDto(
@@ -156,8 +155,8 @@ class UserTest {
             }
 
             @Test
-            @DisplayName("닉네임 null")
-            void nicknameNull() {
+            @DisplayName("닉네임 빈 값")
+            void nicknameIsEmpty() {
                 nickname = "";
 
                 UserRequestDto userRequestDto = new UserRequestDto(
@@ -176,8 +175,8 @@ class UserTest {
 
 
             @Test
-            @DisplayName("이름 null")
-            void nameNull() {
+            @DisplayName("이름 빈 값")
+            void nameIsEmpty() {
                 name = "";
 
                 UserRequestDto userRequestDto = new UserRequestDto(
@@ -224,7 +223,7 @@ class UserTest {
         class LoginFailCase {
 
             @Test
-            @DisplayName("실패1")
+            @DisplayName("실패1 / 가입되지 않은 username")
             void LoginFail1() {
                 username = "na@naver.com";
                 UserRequestDto userRequestDto = new UserRequestDto(
@@ -246,7 +245,7 @@ class UserTest {
 
 
             @Test
-            @DisplayName("실패2")
+            @DisplayName("실패2 / 잘못된 비밀번호")
             void LoginFail2() {
                 username = "nanao@naver.com";
                 password = "qwerqwer";

@@ -18,17 +18,17 @@ public class UserValidator {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다");
         }
     }
-    public static void checkNull(String username, String password, String name, String nickname) {
-        if(username.equals("")) {
+    public static void checkIsEmpty(String username, String password, String name, String nickname) {
+        if(username.isEmpty()) {
             throw new IllegalArgumentException("이메일은 필수 입력 값입니다");
         }
-        if(password.equals("")) {
+        if(password.isEmpty()) {
             throw new IllegalArgumentException("패스워드는 필수 입력 값입니다");
         }
-        if(name.equals("")) {
+        if(name.isEmpty()) {
             throw new IllegalArgumentException("이름은 필수 입력 값입니다");
         }
-        if(nickname.equals("")) {
+        if(nickname.isEmpty()) {
             throw new IllegalArgumentException("닉네임은 필수 입력 값입니다");
         }
     }
