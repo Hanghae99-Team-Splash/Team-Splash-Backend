@@ -1,11 +1,16 @@
 package com.splash.teamsplashbackend.validator;
 
 
+
 import com.splash.teamsplashbackend.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+
 @Component
+@RequiredArgsConstructor
 public class UserValidator {
     //이메일 중복검사
     public static void checkEmail(Optional<User> foundEmail) {

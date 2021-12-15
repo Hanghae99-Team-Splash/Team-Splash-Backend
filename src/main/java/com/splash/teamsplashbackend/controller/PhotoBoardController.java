@@ -18,7 +18,6 @@ import java.util.List;
 public class PhotoBoardController {
     private final PhotoBoardService photoBoardService;
 
-
     @ApiOperation(value = "사진 게시물 등록")
     @PostMapping("/api/board")
     public Long photoBoardUpload(
