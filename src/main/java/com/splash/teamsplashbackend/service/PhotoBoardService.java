@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +65,7 @@ public class PhotoBoardService {
             User user
     ) {
         PhotoBoard modifiedBoard = photoBoardRepository.findById(boardId).orElseThrow(
-                () -> new NullPointerException("게시글이 없습니다.")
+                () -> new NullPointerException("해당 게시글이 없습니다.")
         );
 
         if (!modifiedBoard.getUser().getId().equals(user.getId()))
@@ -79,6 +78,9 @@ public class PhotoBoardService {
     @Transactional
     public List<PhotoBoardResponseDto> findAll() {
 
+        if(photoBoardRepository.count() == 0) {
+            throw  new NullPointerException("조회할 게시글이 없습니다.");
+        }
 
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
 
