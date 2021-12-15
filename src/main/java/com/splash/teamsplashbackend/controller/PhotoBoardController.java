@@ -4,15 +4,18 @@ import com.splash.teamsplashbackend.config.UserDetailsImpl;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.service.PhotoBoardService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Api(tags = {"게시물 등록/상세조회/삭제/수정/전체조회 or 유저가 작성한 게시물/좋아요 한 게시물 가져오기"})
 @RestController
 @RequiredArgsConstructor
 public class PhotoBoardController {
@@ -21,7 +24,7 @@ public class PhotoBoardController {
     @ApiOperation(value = "사진 게시물 등록")
     @PostMapping("/api/board")
     public Long photoBoardUpload(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestPart @Valid PhotoBoardRequestDto photoBoardRequestDto,
             @RequestPart(required = false) @Valid MultipartFile multipartFile
     ) {
@@ -31,7 +34,7 @@ public class PhotoBoardController {
     @ApiOperation(value = "사진 게시물 수정")
     @PutMapping("/api/board/edit/{id}")
     public void photoBoardEdit(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
             @RequestBody PhotoBoardRequestDto photoBoardRequestDto
     ) {
@@ -55,7 +58,7 @@ public class PhotoBoardController {
     @ApiOperation(value = "게시글 삭제")
     @DeleteMapping("/api/board/detail/{id}")
     public void photoBoardDelete(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id
     ) {
         photoBoardService.deletePhotoBoard(id, userDetails.getUser().getId());
@@ -64,14 +67,14 @@ public class PhotoBoardController {
     //유저가 쓴 게시글 목록 가져오기
     @ApiOperation(value = "유저가 쓴 게시글 목록 가져오기")
     @GetMapping("/api/user/mypage/boardlist")
-    public List<PhotoBoardResponseDto> getUserPhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public List<PhotoBoardResponseDto> getUserPhotoBoardList(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return photoBoardService.findUserBoardList(userDetails);
     }
 
     //내가 좋아요 누른 목록 가져오기
     @ApiOperation(value = "유저가 좋아요 누른 목록 가져오기")
     @GetMapping("/api/user/mypage/likelist")
-    public List<PhotoBoardResponseDto> getUserLikePhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public List<PhotoBoardResponseDto> getUserLikePhotoBoardList(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return photoBoardService.findUserLikePhotoBoardList(userDetails);
     }
 }

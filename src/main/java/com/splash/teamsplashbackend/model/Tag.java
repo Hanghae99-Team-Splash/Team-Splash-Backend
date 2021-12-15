@@ -1,6 +1,7 @@
 package com.splash.teamsplashbackend.model;
 
 
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Setter
+@ApiModel(description = "태그 모델")
 public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

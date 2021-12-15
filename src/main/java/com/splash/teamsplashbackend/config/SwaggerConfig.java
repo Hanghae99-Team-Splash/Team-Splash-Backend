@@ -15,46 +15,27 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 @Configuration
 @EnableSwagger2
-@EnableWebMvc
-public class SwaggerConfig extends WebMvcConfigurationSupport {
+public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-//                .ignoredParameterTypes(AuthenticationPrincipal.class)
-                // @ AuthenticationPrincipal 어노테이션을 사용하면서 해당 API에 요청 param으로 요구되어 이를 무시하기 위한 설정
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.splash.teamsplashbackend"))
-//                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
-
         return new ApiInfoBuilder()
-                .title("")
-                .description("")
-                .version("")
-                .termsOfServiceUrl("")
-                .license("")
-                .licenseUrl("")
+                .title("unSplash 클론코딩")
+                .version("ver 1")
+                .description("unSplash를 클론 코딩하는 항해99 4기 13조입니다!!")
                 .build();
     }
 
-    @Override public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
 
-        registry
-                .addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
-        super.addResourceHandlers(registry);
-    }
-
-    // 완료가 되었으면 오른쪽 URL 로 접속 => http://localhost:8080/swagger-ui.html
 }

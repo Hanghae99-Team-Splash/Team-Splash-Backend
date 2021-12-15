@@ -4,6 +4,7 @@ import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.utils.TimeCalculator;
 import com.splash.teamsplashbackend.utils.Timestamped;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "게시물 모델")
 public class PhotoBoard extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

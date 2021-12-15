@@ -1,6 +1,7 @@
 package com.splash.teamsplashbackend.model;
 
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "좋아요 모델")
 public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

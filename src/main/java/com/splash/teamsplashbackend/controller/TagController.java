@@ -5,10 +5,12 @@ package com.splash.teamsplashbackend.controller;
 import com.splash.teamsplashbackend.dto.tag.TagRequestDto;
 import com.splash.teamsplashbackend.dto.tag.TagResponseDto;
 import com.splash.teamsplashbackend.service.TagService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"태그등록/태그별 게시물 가져오기"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
