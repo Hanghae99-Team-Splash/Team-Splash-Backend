@@ -6,6 +6,7 @@ import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.model.User;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
 import com.splash.teamsplashbackend.utils.TimeCalculator;
+import com.splash.teamsplashbackend.validator.PhotoBoardValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,19 @@ public class PhotoBoardService {
             MultipartFile multipartFile,
             User user
     ) {
-        if(multipartFile.getSize() == 0) {
-            throw new NullPointerException("등록하려는 게시글에 이미지가 없습니다.");
-        }
+        PhotoBoardValidator.checkMultipartFileNullAndSize(multipartFile);
 
+        String location = photoBoardRequestDto.getLocation();
+        String description = photoBoardRequestDto.getDescription();
+        String tagname = photoBoardRequestDto.getTagname();
 //        String imageUrl = s3Uploader.upload(multipartFile, imageDirName);
+
+        PhotoBoardValidator.photoBoardCheckIsEmpty(location, description, tagname);
         PhotoBoard post = PhotoBoard.builder()
                         .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
-                        .location(photoBoardRequestDto.getLocation())
-                        .description(photoBoardRequestDto.getDescription())
-                        .tagname(photoBoardRequestDto.getTagname())
+                        .location(location)
+                        .description(description)
+                        .tagname(tagname)
                         .user(user)
                         .build();
         photoBoardRepository.save(post);
@@ -66,6 +70,7 @@ public class PhotoBoardService {
     @Transactional
     public List<PhotoBoardResponseDto> findAll() {
 
+
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
 
         return board.stream()
@@ -86,6 +91,8 @@ public class PhotoBoardService {
                 .collect(Collectors.toList()
                 );
     }
+
+
     @Transactional
     public PhotoBoardResponseDto findPhotoBoard(
             Long id
