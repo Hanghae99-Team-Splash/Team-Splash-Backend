@@ -30,7 +30,7 @@ public class UserService {
         String name = userRequestDto.getName();
         String nickname = userRequestDto.getNickname();
         //회원가입 빈 값 금지
-        UserValidator.checkNull(username, password, name, nickname);
+        UserValidator.checkIsEmpty(username, password, name, nickname);
         Optional<User>foundEmail = userRepository.findByUsername(username);
         //이메일 중복검사
         UserValidator.checkEmail(foundEmail);
