@@ -32,19 +32,17 @@ public class TagService {
 
     //태그 해당하는 게시물들 가져오기
     @Transactional
-    public TagResponseDto takeSpecificTagBoards(String tagnm) {
-        Tag tag = tagRepository.findByTagname(tagnm);
-        String tagname = tag.getTagname();
+    public TagResponseDto takeSpecificTagBoards(String tagname) {
         List<Tag> tags = tagRepository.findAll();
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         HashMap<String,List<PhotoBoardResponseDto>> tagMap = new HashMap<>();
-        for(Tag t : tags) {
-            String tagName = t.getTagname();
-            List<PhotoBoard> photoBoards = photoBoardRepository.findAllByTagname(tagName);
+        for(Tag tag : tags) {
+            String allTagName = tag.getTagname();
+            List<PhotoBoard> photoBoards = photoBoardRepository.findAllByTagname(allTagName);
             for(int i=0; i<photoBoards.size(); i++) {
                 photoBoardResponseDtos.add(photoBoards.get(i).toDto());
             }
-            tagMap.put(tagName, photoBoardResponseDtos);
+            tagMap.put(allTagName, photoBoardResponseDtos);
         }
         return TagResponseDto.builder()
                 .tagname(tagname)
