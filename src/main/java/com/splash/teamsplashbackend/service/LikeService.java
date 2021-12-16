@@ -22,8 +22,6 @@ public class LikeService {
     @Transactional
     public String clickLike(UserDetailsImpl userDetails, Long boardId) {
         Long userId = userDetails.getUser().getId();
-        PhotoBoard photoBoard = photoBoardRepository.findById(boardId).orElseThrow(
-                ()-> new IllegalArgumentException("존재하지 않는 게시물입니다"));
         Optional<Likes> foundLike = likeRepository.findByBoardIdAndUserId(boardId, userId);
         if(foundLike.isPresent()) {
             likeRepository.deleteById(foundLike.get().getId());
