@@ -23,9 +23,9 @@ public class TagController {
     }
 
     @ApiOperation(value = "태그에 따른 게시물 가져오기")
-    @GetMapping("/tag/{tagid}")
-    public TagResponseDto getSpecificTagBoards(@PathVariable Long tagid) {
-        return tagService.takeSpecificTagBoards(tagid);
+    @GetMapping("/tag/{tagname}")
+    public TagResponseDto getSpecificTagBoards(@PathVariable String tagname) {
+        return tagService.takeSpecificTagBoards(tagname);
     }
 
 }

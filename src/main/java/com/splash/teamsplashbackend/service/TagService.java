@@ -32,9 +32,8 @@ public class TagService {
 
     //태그 해당하는 게시물들 가져오기
     @Transactional
-    public TagResponseDto takeSpecificTagBoards(Long tagid) {
-        Tag tag = tagRepository.findById(tagid).orElseThrow(
-                ()->new IllegalArgumentException("찾으시는 태그가 없습니다"));
+    public TagResponseDto takeSpecificTagBoards(String tagnm) {
+        Tag tag = tagRepository.findByTagname(tagnm);
         String tagname = tag.getTagname();
         List<Tag> tags = tagRepository.findAll();
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();

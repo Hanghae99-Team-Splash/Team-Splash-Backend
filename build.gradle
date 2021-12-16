@@ -45,8 +45,8 @@ dependencies {
 
 
     // AWS S3
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+//    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // JWT 토큰
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
