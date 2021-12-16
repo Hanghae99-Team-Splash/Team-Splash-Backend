@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,11 +21,11 @@ public class PhotoBoardController {
 
     @ApiOperation(value = "사진 게시물 등록")
     @PostMapping("/api/board")
-    public Long photoBoardUpload(
+    public PhotoBoardResponseDto photoBoardUpload(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestPart @Valid PhotoBoardRequestDto photoBoardRequestDto,
             @RequestPart(required = false) @Valid MultipartFile multipartFile
-    ) {
+    ) throws IOException {
         return photoBoardService.uploadPhotoPost(photoBoardRequestDto, multipartFile, userDetails.getUser());
     }
 

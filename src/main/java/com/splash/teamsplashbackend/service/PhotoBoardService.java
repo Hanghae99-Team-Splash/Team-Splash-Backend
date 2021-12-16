@@ -31,7 +31,7 @@ public class PhotoBoardService {
 
 //    private final String imageDirName = "static";
 
-    public Long uploadPhotoPost(
+    public PhotoBoardResponseDto uploadPhotoPost(
             PhotoBoardRequestDto photoBoardRequestDto,
             MultipartFile multipartFile,
             User user
@@ -54,7 +54,16 @@ public class PhotoBoardService {
                         .build();
         photoBoardRepository.save(post);
 
-        return post.getId();
+
+        return PhotoBoardResponseDto.builder()
+                .boardId(post.getId())
+                .nickname(user.getNickname())
+                .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
+                .location(location)
+                .description(description)
+                .tagname(tagname)
+                .size(post.getSize())
+                .build();
     }
 
 
