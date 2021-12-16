@@ -98,11 +98,12 @@
 
 ## ERD Cloud
 
-<img src="https://user-images.githubusercontent.com/70641418/145669235-290d39b2-62b4-405d-84e6-90fcc735264c.JPG" style="width: 1000px;">
+<img src="https://user-images.githubusercontent.com/70641418/146375395-70cbf5c0-f9a3-4013-81ce-9e28110cf22e.JPG" style="width: 1000px;">
+
 
 백엔드 팀원과 함께 ERD Cloud 사이트에서 DB 설계 했습니다.  
 ERD Cloud 링크로 이동 =>
-<a href="https://www.erdcloud.com/d/8YAbsi25XhvDwxo7R">클릭</a>
+<a href="https://www.erdcloud.com/d/N54ctHNPztjQHbn9W">클릭</a>
 
 <br/>
 
