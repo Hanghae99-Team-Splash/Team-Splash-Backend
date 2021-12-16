@@ -88,7 +88,7 @@ public class PhotoBoardService {
     public List<PhotoBoardResponseDto> findAll() {
 
         if(photoBoardRepository.count() == 0) {
-            throw  new NullPointerException("조회할 게시글이 없습니다.");
+            throw new NullPointerException("조회할 게시글이 없습니다.");
         }
 
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
