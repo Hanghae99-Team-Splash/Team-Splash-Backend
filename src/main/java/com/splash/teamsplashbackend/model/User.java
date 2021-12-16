@@ -1,6 +1,7 @@
 package com.splash.teamsplashbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,9 +38,11 @@ public class User {
     private Long kakaoId;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
     List<PhotoBoard> photoBoards = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
     List<Likes> likes = new ArrayList<>();
 
     @Builder
