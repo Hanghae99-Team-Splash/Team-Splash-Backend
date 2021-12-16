@@ -10,17 +10,23 @@
 
 ### 구성원 및 역할👫
 
-**Front-end**
-<p>정주혜</p>
-<p>이준명</p>
-https://github.com/Hanghae99-Team-Splash/Team-Splash-Frontend
+## **Front-end**
+- 정주혜:
+- 이준명:
+
+프론트 깃헙 링크 => 
+<a href="https://github.com/Hanghae99-Team-Splash/Team-Splash-Frontend">바로가기</a>
+
 </br>
 
-**Back-end**
-<p>이현범: 회원가입, JWT 로그인 기능 구현, 태그화, 좋아요, 카카오톡 로그인, Spring Security 사용</p>
-<p>임전혁: S3 게시물 기능 구현, 조회수 기능 구현, 테스트코드 작성, EC2배포, CORS처리</p>
 
-https://github.com/Hanghae99-Team-Splash/Team-Splash-Backend
+## **Back-end**
+- 이현범: 회원가입, JWT 로그인 기능 구현, 태그화, 좋아요, 카카오톡 로그인, Spring Security 사용
+- 임전혁: S3 게시물 기능 구현, 조회수 기능 구현, 테스트코드 작성, EC2배포, CORS처리
+
+백엔드 깃헙 링크 => 
+<a href="https://github.com/Hanghae99-Team-Splash/Team-Splash-Backend">바로가기</a>
+
 </br>
 </br>
 
