@@ -1,124 +1,144 @@
-# Team Splash
-## Splash 소개🚗  
+# 🎊항해99 7주차 클론코딩 <13조>🎊
+📆2021.12.13 ~ 2021.12.18
+</br>
 
+### Splash
+<p>UnSplash 클론코딩</p>
 
+</br>
+</br>
 
-<img src="https://user-images.githubusercontent.com/70641418/145668920-6e7a9392-1559-4621-8be8-286200580497.JPG" style="width: 1000px;">
+### MEMBER👫
 
-차박(차에서 숙박) 할 꿀 장소들을 공유하는 SNS입니다.  
-다양한 차박 장소들을 사진, 지역과 글을 통해 공유할 수 있습니다👍
+**Front-end**
+<p>정주혜</p>
+<p>이준명</p>
+https://github.com/Hanghae99-Team-Splash/Team-Splash-Frontend
+</br>
 
-팀 노션 링크 =>
-<a href="https://www.notion.so/4-6-10-6d4bde31359447f282101443beab8fe7">클릭</a>
+**Back-end**
+<p>이현범</p>
+<p>임전혁</p>
 
-<br/>
-<br/>
-
-## Team Chabak Rule 🤝
-✔️ 프론트, 백엔드로 진행되는 첫 프로젝트이기 때문에 대화를 통해 문제점을 개선해 나갑니다.
-
-✔️ 그 어떤 의사결정도 당연한 것이 없기 때문에 서로에게 끊임없이 되묻습니다.
-
-✔️ PR 후 Merge는 팀원이 알 수 있도록 공유 후에 진행합니다.
-
-✔️ 막히는 부분은 공유하고, 가능하면 같이 해결해 나갑니다.
-
-✔️ 개발 중 드는 의문에 대해서는 노션에 남겨 토론을 진행합니다.
-
-✔️ 토론한 내용을 바탕으로 팀 노션에 문서화하여 기록으로 남깁니다.
-
-<br/>
-
-
-
-## UI 디자인
-
-![피그마](https://user-images.githubusercontent.com/70641418/145669186-173be214-9e25-49c1-bbd7-38487ac7906b.JPG)
-
-피그마(Figma)툴을 사용해서 UI를 디자인했습니다.  
-
-피그마로 URL로 이동 =>
-<a href="https://www.figma.com/file/z3liAITH2IJig8fkeEZat2/Untitled">클릭</a>
-
-
-<br/>
-
-## Team Chabak Frontend
-- 이준명 => ** 기능 구현
-- 정주혜 => ** 기능 구현
-
-## Team Chabak Backend
-- 이현범 => JWT 활용 로그인 기능 구현
-- 임전혁 => CRUD 이미지 업로드 기능 구현  
-
-<br/>
-
-## 기술 스택 🧰
-### Back-end
-- Java 8
-- SpringBoot 2.5.3  
-- Spring Security  
-- Gradle  
-- JPA  
-- MySQL 8.0  
-
-### Front-end
-- React
-- Redux
-- JavaScript
-- HTML, CSS
-
-<br/>
-
-### DevOps
-- AWS EC2 (Centos7)
-- AWS RDS (MySQL 8.0)
-- AWS S3
-
-<br/>
-
-## 개발 포인트 🔍
-
-- Git을 활용한 협업 진행
-- 노션을 통한 진행상황 공유
-- 팀 프로젝트 중 개선할 점 혹은 피드백 노션에 정리
-- AWS를 활용한 배포
-- DB 설계, 와이어프레임 결과물, 툴을 사용해서 프론트, 백엔드 공유 => ex) 피그마, ERDcloud
-
-<br/>
-
-## 설계 ✏
-- API 설계 - 노션 페이지, Swagger API 문서 자동화
-- ERD 설계 - ERDcloud
-- 와이어프레임 - 피그마(Figma)
-
-<br/>
-
-## ERD Cloud
-
-<img src="https://user-images.githubusercontent.com/70641418/146375395-70cbf5c0-f9a3-4013-81ce-9e28110cf22e.JPG" style="width: 1000px;">
-
-
-백엔드 팀원과 함께 ERD Cloud 사이트에서 DB 설계 했습니다.  
-ERD Cloud 링크로 이동 =>
-<a href="https://www.erdcloud.com/d/N54ctHNPztjQHbn9W">클릭</a>
-
-<br/>
+https://github.com/Hanghae99-Team-Splash/Team-Splash-Backend
+</br>
+</br>
 
 ---
-# 프로젝트 후기
+</br>
+
+## 🎞프로젝트 시연 영상🎞
+![Hnet-image](https://user-images.githubusercontent.com/90505402/145673301-d27810b2-c587-44ea-bbe7-bf6e0ae896a8.gif)
 
 
-<code>갓준명</code>
-- 내용
+
+</br>
+</br>
+
+## 🛠TECH STACK🛠
+
+### Back-End
+
+<img height="40" src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/Springboot-47?style=flat&logo=Springboot&logoColor=white"/></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white"/></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/JWT-000000?style=flat&logo=JSON%20web%20tokens&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=Swagger&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=flat&logo=amazonaws&logoColor=white"></a>&nbsp;
+<img height="40" src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"></a>&nbsp;
 
 
-<code>정주혜</code>
-- 내용
+### Front-End
+<div>
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black">
+  <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white">
+  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  
+  
+</div>
+</br>
+</br>
+
+## ⚙주요 기능⚙
+**로그인/회원가입**
+  - 이메일 중복확인 기능
+  - 회원가입시 Email, 비밀번호 유효성 검사
+  - 빈칸 금지
+  </br>
+  
+**메인페이지**
+  * 로그인한 유저이름 출력
+  * 게시글 목록 출력
+    - 키워드 클릭 시 해당 카테고리의 출력
+    - 카드별 이미지, Title, 작성자, 조회수 표시
+  * 카테고리 별 게시글 출력(필터)
+    - 키워드 클릭 시 해당 카테고리의 출력
+  * 상세페이지 이동
+    - 카드 클릭 시 해당 상세페이지 이동
+  </br>
+  
+**게시글 작성 페이지**
+  * 사진 업로드
+  * 빈칸 메세지
+  </br>
+  
+**상세페이지**
+  * 게시글 상세내용 출력
+  * 댓글기능
+    - 로그인한 사용자만 댓글 작성가능
+</br>
+
+**마이페이지**
+  * 로그인한 사용자의 게시물 확인 가능
+</br>
+</br>
+
+## 📅Entity 다이어그램
+<img width="723" alt="스크린샷 2021-12-16 오후 10 03 58" src="https://user-images.githubusercontent.com/57126167/146377185-47f86312-386d-45ff-bcf8-9c4199de3769.png">
+</br>
+</br>
 
 
-<code>이현범</code>
-- 내용
+</br>
+</br>
 
-<code>임전혁</code>
-- 내용
+## 📜API TABLE
+</br>
+<img width="1124" alt="스크린샷 2021-12-16 오후 10 08 11" src="https://user-images.githubusercontent.com/57126167/146378022-6f242a9b-e370-4dff-8000-7d69d0edeb0e.png">
+<img width="1123" alt="스크린샷 2021-12-16 오후 10 08 31" src="https://user-images.githubusercontent.com/57126167/146378049-f27bbf91-9711-4ff2-bd1f-c684fb1a124c.png">
+<img width="1165" alt="스크린샷 2021-12-16 오후 10 09 30" src="https://user-images.githubusercontent.com/57126167/146378069-da9a9a43-0621-4bf0-be3a-ca32706e56dd.png">
+<img width="1172" alt="스크린샷 2021-12-16 오후 10 09 44" src="https://user-images.githubusercontent.com/57126167/146378097-d6ccca1c-9670-4882-b928-05f1750ed74b.png">
+<img width="1173" alt="스크린샷 2021-12-16 오후 10 09 54" src="https://user-images.githubusercontent.com/57126167/146378120-932153b1-c3aa-4aa9-b14b-4cfc82f1e061.png">
+<img width="1252" alt="스크린샷 2021-12-16 오후 10 10 15" src="https://user-images.githubusercontent.com/57126167/146378123-d4f5ca3d-72a8-4a1e-959f-ccf7abd07778.png">
+<img width="1001" alt="스크린샷 2021-12-16 오후 10 10 25" src="https://user-images.githubusercontent.com/57126167/146378127-c2a743c4-16c6-4648-9689-0d767578c45d.png">
+<img width="1031" alt="스크린샷 2021-12-16 오후 10 10 39" src="https://user-images.githubusercontent.com/57126167/146378130-6188bd0b-f7d3-4ceb-897f-ded0351b6407.png">
+</br>
+</br>
+
+## ✒Trouble Shooting
+<details>
+    <summary>
+        1. CORS 정책으로 인한 접속문제
+    </summary>
+    <div markcown="1">
+        cors필터를 스프링 시큐리티에 끼워 넣어서 해결
+    </div>
+</details>
+
+<details>
+    <summary>
+        2. Spring Security와 JWT로 인한 카카오 로그인 문제
+    </summary>
+    <div markcown="1">
+        카카오 강제로그인을 없애고 jwt 토큰 발급을 이용해 해결
+    </div>
+</details>
+
+
+</br>
+</br>
