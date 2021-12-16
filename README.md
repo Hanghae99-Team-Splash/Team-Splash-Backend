@@ -8,9 +8,9 @@
 </br>
 </br>
 
-### 구성원 및 역할👫
+## 구성원 및 역할👫
 
-## **Front-end**
+### **Front-end**
 - 정주혜:
 - 이준명:
 
@@ -20,7 +20,7 @@
 </br>
 
 
-## **Back-end**
+### **Back-end**
 - 이현범: 회원가입, JWT 로그인 기능 구현, 태그화, 좋아요, 카카오톡 로그인, Spring Security 사용
 - 임전혁: S3 게시물 기능 구현, 조회수 기능 구현, 테스트코드 작성, EC2배포, CORS처리
 
@@ -45,15 +45,15 @@
 
 ### Back-End
 
-<img height="40" src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/Springboot-47?style=flat&logo=Springboot&logoColor=white"/></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white"/></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/JWT-000000?style=flat&logo=JSON%20web%20tokens&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=Swagger&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=flat&logo=amazonaws&logoColor=white"></a>&nbsp;
-<img height="40" src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/Springboot-47?style=flat&logo=Springboot&logoColor=white"/></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white"/></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/JWT-000000?style=flat&logo=JSON%20web%20tokens&logoColor=white"></a>&nbsp;  
+<img height="28" src="https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=Swagger&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/gradle-02303A?style=flat&logo=gradle&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=flat&logo=amazonaws&logoColor=white"></a>&nbsp;
+<img height="28" src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"></a>&nbsp;
 
 
 ### Front-End
