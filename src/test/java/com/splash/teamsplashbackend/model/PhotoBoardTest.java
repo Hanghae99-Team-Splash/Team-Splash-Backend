@@ -15,18 +15,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 
 @ExtendWith(MockitoExtension.class)
 class PhotoBoardTest {
@@ -49,8 +46,6 @@ class PhotoBoardTest {
     @Mock
     private LikeRepository mockLikeRepository;
 
-    @Mock
-    private UserRepository mockUserRepository;
 
     private String nickname;
     private String location;
