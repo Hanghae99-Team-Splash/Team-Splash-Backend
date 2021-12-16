@@ -28,13 +28,11 @@ public class LikeService {
         if(foundLike.isPresent()) {
             likeRepository.deleteById(foundLike.get().getId());
             photoBoardRepository.downLikeCnt(boardId);
-            photoBoardRepository.save(photoBoard);
             return "Success Like Off";
         }
         else {
             likeRepository.save(new Likes(boardId, userDetails.getUser()));
             photoBoardRepository.upLikeCnt(boardId);
-            photoBoardRepository.save(photoBoard);
             return "Success Like On";
         }
     }
