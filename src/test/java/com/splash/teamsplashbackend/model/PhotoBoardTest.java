@@ -455,7 +455,7 @@ class PhotoBoardTest {
                 photoBoardService.findPhotoBoard(boardId);
             });
 
-            assertEquals("찾으려는 게시글이 없습니다.", exception.getMessage());
+            assertEquals("해당 게시글이 없습니다.", exception.getMessage());
         }
     }
 
@@ -518,7 +518,7 @@ class PhotoBoardTest {
                 Exception exception = assertThrows(NullPointerException.class, () -> {
                     photoBoardService.deletePhotoBoard(photoBoard.getId(), user.getId());
                 });
-                assertEquals("삭제하려는 게시글이 없습니다.", exception.getMessage());
+                assertEquals("해당 게시글이 없습니다.", exception.getMessage());
             }
 
             @Test
@@ -546,7 +546,7 @@ class PhotoBoardTest {
                 Exception exception = assertThrows(NullPointerException.class, () -> {
                     photoBoardService.deletePhotoBoard(photoBoard.getId(), user.getId() + 1);
                 });
-                assertEquals("삭제하려는 게시글이 없습니다.", exception.getMessage());
+                assertEquals("해당 게시글이 없습니다.", exception.getMessage());
             }
         }
     }
