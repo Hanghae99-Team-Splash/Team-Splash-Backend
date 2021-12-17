@@ -2,14 +2,19 @@ package com.splash.teamsplashbackend.service;
 
 
 import com.splash.teamsplashbackend.config.UserDetailsImpl;
+import com.splash.teamsplashbackend.dto.likes.LikesResponseDto;
 import com.splash.teamsplashbackend.model.Likes;
 import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.repository.LikeRepository;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +39,17 @@ public class LikeService {
             return "Success Like On";
         }
     }
+    @Transactional
+    public LikesResponseDto getOnePostingLikesUserIds(@PathVariable Long boardId) {
+        List<Likes> likesList = likeRepository.findAllByBoardId(boardId);
+        List<Long> userIds = new ArrayList<>();
+       for (int i=0; i<likesList.size(); i++) {
+           userIds.add(likesList.get(i).getUser().getId());
+       }
+        return LikesResponseDto.builder()
+                .userIds(userIds)
+                .build();
+    }
+
 
 }

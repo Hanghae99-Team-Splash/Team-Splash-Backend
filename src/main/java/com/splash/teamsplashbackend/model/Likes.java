@@ -1,6 +1,7 @@
 package com.splash.teamsplashbackend.model;
 
 
+import com.splash.teamsplashbackend.dto.likes.LikesResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
