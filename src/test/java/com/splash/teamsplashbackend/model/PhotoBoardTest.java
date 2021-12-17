@@ -4,6 +4,7 @@ import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.repository.LikeRepository;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
+import com.splash.teamsplashbackend.repository.TagRepository;
 import com.splash.teamsplashbackend.repository.UserRepository;
 import com.splash.teamsplashbackend.service.PhotoBoardService;
 import org.junit.jupiter.api.*;
@@ -39,6 +40,9 @@ class PhotoBoardTest {
 
     @Autowired
     private LikeRepository likeRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @Mock
     private PhotoBoardRepository mockPhotoBoardRepository;
@@ -137,7 +141,11 @@ class PhotoBoardTest {
                 userRepository.save(user);
 
 
-                PhotoBoardService mockPhotoBoardService = new PhotoBoardService(photoBoardRepository, likeRepository);
+                PhotoBoardService mockPhotoBoardService = new PhotoBoardService(
+                        photoBoardRepository,
+                        likeRepository,
+                        tagRepository
+                );
 
                 MockMultipartFile mockMultipartFile = new MockMultipartFile(
                         "image1", "image1", "application/doc", "image".getBytes());
@@ -392,7 +400,11 @@ class PhotoBoardTest {
         @DisplayName("실패 / 조회할 게시글이 없음")
         void FinaAllPhotoBoard_fail() {
 
-            PhotoBoardService mockPhotoBoardService  = new PhotoBoardService(mockPhotoBoardRepository, mockLikeRepository);
+            PhotoBoardService mockPhotoBoardService  = new PhotoBoardService(
+                    mockPhotoBoardRepository,
+                    mockLikeRepository,
+                    tagRepository
+            );
 
             Exception exception = assertThrows(NullPointerException.class, () -> {
                 mockPhotoBoardService.findAll();
