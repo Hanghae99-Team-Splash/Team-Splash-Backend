@@ -34,19 +34,18 @@ public class PhotoBoardService {
 
 //    private final String imageDirName = "static";
 
+    //region 게시글 업로드
     public PhotoBoardResponseDto uploadPhotoPost(
             PhotoBoardRequestDto photoBoardRequestDto,
             MultipartFile multipartFile,
             User user
     ) {
         PhotoBoardValidator.checkMultipartFileNullAndSize(multipartFile);
+        PhotoBoardValidator.photoBoardRequestEmptyCheck(photoBoardRequestDto);
 
-        String location = photoBoardRequestDto.getLocation();
-        String description = photoBoardRequestDto.getDescription();
-        String tagname = photoBoardRequestDto.getTagname();
 //        String imageUrl = s3Uploader.upload(multipartFile, imageDirName);
 
-        PhotoBoardValidator.photoBoardCheckIsEmpty(location, description, tagname);
+        String tagname = photoBoardRequestDto.getTagname();
         Tag tag = tagRepository.findByTagname(tagname);
         if(tag == null) {
             tagRepository.save(Tag.builder()
@@ -55,8 +54,8 @@ public class PhotoBoardService {
         }
         PhotoBoard post = PhotoBoard.builder()
                         .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
-                        .location(location)
-                        .description(description)
+                        .location(photoBoardRequestDto.getLocation())
+                        .description(photoBoardRequestDto.getDescription())
                         .tagname(tagname)
                         .user(user)
                         .size(photoBoardRequestDto.getSize())
@@ -67,24 +66,24 @@ public class PhotoBoardService {
         return PhotoBoardResponseDto.builder()
                 .boardId(post.getId())
                 .nickname(user.getNickname())
-                .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
-                .location(location)
-                .description(description)
-                .tagname(tagname)
+                .img(post.getImg())
+                .location(post.getLocation())
+                .description(post.getDescription())
+                .tagname(post.getTagname())
                 .size(post.getSize())
                 .build();
     }
+    //endregion
 
-
+    //region 게시글 수정
     @Transactional
-    public void editPhotoBoard(
+    public PhotoBoardResponseDto editPhotoBoard(
             Long boardId,
             PhotoBoardRequestDto photoBoardRequestDto,
             User user
     ) {
-        PhotoBoard modifiedBoard = photoBoardRepository.findById(boardId).orElseThrow(
-                () -> new NullPointerException("해당 게시글이 없습니다.")
-        );
+        PhotoBoardValidator.photoBoardRequestEmptyCheck(photoBoardRequestDto);
+        PhotoBoard modifiedBoard = findPhotoBoardById(boardId);
 
         if (!modifiedBoard.getUser().getId().equals(user.getId()))
             throw new IllegalArgumentException("작성자가 아니라 게시글을 수정 할 수 없습니다.");
@@ -92,7 +91,20 @@ public class PhotoBoardService {
         modifiedBoard.update(photoBoardRequestDto);
 
         photoBoardRepository.save(modifiedBoard);
+
+        return PhotoBoardResponseDto.builder()
+                .boardId(modifiedBoard.getId())
+                .nickname(user.getNickname())
+                .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
+                .location(modifiedBoard.getLocation())
+                .description(modifiedBoard.getDescription())
+                .tagname(modifiedBoard.getTagname())
+                .size(modifiedBoard.getSize())
+                .build();
     }
+    //endregion
+
+    //region 게시글 전체 조회
     @Transactional
     public List<PhotoBoardResponseDto> findAll() {
 
@@ -101,39 +113,36 @@ public class PhotoBoardService {
         }
 
         List<PhotoBoard> board = photoBoardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+        List<PhotoBoardResponseDto> photoBoardResponseDtoList = new ArrayList<>();
+        for(PhotoBoard photoBoard : board) {
+            PhotoBoardResponseDto responseDto = PhotoBoardResponseDto.builder()
+                    .boardId(photoBoard.getId())
+                    .userId(photoBoard.getUser().getId())
+                    .img(photoBoard.getImg())
+                    .location(photoBoard.getLocation())
+                    .tagname(photoBoard.getTagname())
+                    .nickname(photoBoard.getUser().getNickname())
+                    .description(photoBoard.getDescription())
+                    .size(photoBoard.getSize())
+                    .modifiedAt( TimeCalculator.timecalculator(photoBoard.getModifiedAt()))
+                    .views(photoBoard.getViews())
+                    .likeCnt(photoBoard.getLikeCnt())
+                    .build();
+            photoBoardResponseDtoList.add(responseDto);
+        }
 
-        return board.stream()
-                .map(
-                        s-> new PhotoBoardResponseDto(
-                                s.getId(),
-                                s.getUser().getId(),
-                                s.getImg(),
-                                s.getLocation(),
-                                s.getTagname(),
-                                s.getUser().getNickname(),
-                                s.getDescription(),
-                                s.getSize(),
-                                TimeCalculator.timecalculator(s.getModifiedAt()),
-                                s.getViews(),
-                                s.getLikeCnt()
-                        )
-                )
-                .collect(Collectors.toList()
-                );
+        return photoBoardResponseDtoList;
     }
+    //endregion
 
-
+    //region 게시글 하나 조회
     @Transactional
     public PhotoBoardResponseDto findPhotoBoard(
-            Long id
+            Long boardId
     ) {
-        PhotoBoard photoBoard = photoBoardRepository.findById(id)
-                .orElseThrow(
-                        () -> new NullPointerException("찾으려는 게시글이 없습니다.")
-                );
-
+        PhotoBoard photoBoard = findPhotoBoardById(boardId);
 //        photoBoard.setViews(photoBoard.getViews() + 1);
-        photoBoardRepository.updateView(id);
+        photoBoardRepository.updateView(boardId);
 
         return PhotoBoardResponseDto.builder()
                 .boardId(photoBoard.getId())
@@ -149,24 +158,28 @@ public class PhotoBoardService {
                 .likeCnt(photoBoard.getLikeCnt())
                 .build();
     }
+    //endregion
 
+    //region 게시글 삭제
     public void deletePhotoBoard(
             Long boardId,
             Long loginUserId
     ) {
-        PhotoBoard board = photoBoardRepository.findById(boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("삭제하려는 게시글이 없습니다.")
-                );
+        PhotoBoard board = findPhotoBoardById(boardId);
+
         if (!board.getUser().getId().equals(loginUserId)) {
             throw new IllegalArgumentException("작성자가 아니라 게시글을 삭제 할 수 없습니다.");
         }
 
         photoBoardRepository.deleteById(boardId);
     }
+    //endregion
+
     // 유저가 쓴 게시물 목록 가져오기 메소드
     @Transactional
-    public List<PhotoBoardResponseDto> findUserBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public List<PhotoBoardResponseDto> findUserBoardList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         List<PhotoBoard> photoBoards= photoBoardRepository.findAllByUserId(userDetails.getUser().getId());
         for(PhotoBoard photoBoard : photoBoards) {
@@ -178,7 +191,9 @@ public class PhotoBoardService {
 
     // 유저가 좋아요 한 목록 가져오기 메소드
     @Transactional
-    public List<PhotoBoardResponseDto> findUserLikePhotoBoardList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public List<PhotoBoardResponseDto> findUserLikePhotoBoardList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         List<Likes> likes = likeRepository.findAllByUser(userDetails.getUser());
         HashMap<Long,Long> likeIdMap = new HashMap<>();
@@ -193,5 +208,14 @@ public class PhotoBoardService {
         return photoBoardResponseDtos;
     }
 
+
+    private PhotoBoard findPhotoBoardById(
+            Long boardId
+    ) {
+        PhotoBoard photoBoard = photoBoardRepository.findById(boardId).orElseThrow(
+                () -> new NullPointerException("해당 게시글이 없습니다.")
+        );
+        return photoBoard;
+    }
 
 }
