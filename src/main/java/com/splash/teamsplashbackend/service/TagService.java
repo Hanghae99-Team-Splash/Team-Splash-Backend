@@ -43,6 +43,7 @@ public class TagService {
                 photoBoardResponseDtos.add(photoBoards.get(i).toDto());
             }
             tagMap.put(allTagName, photoBoardResponseDtos);
+            photoBoardResponseDtos = new ArrayList<>();
         }
         return TagResponseDto.builder()
                 .tagname(tagname)
