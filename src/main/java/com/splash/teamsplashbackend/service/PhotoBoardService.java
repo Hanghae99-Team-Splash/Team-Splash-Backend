@@ -35,6 +35,7 @@ public class PhotoBoardService {
 //    private final String imageDirName = "static";
 
     //region 게시글 업로드
+    @Transactional
     public PhotoBoardResponseDto uploadPhotoPost(
             PhotoBoardRequestDto photoBoardRequestDto,
             MultipartFile multipartFile,
@@ -87,7 +88,13 @@ public class PhotoBoardService {
 
         if (!modifiedBoard.getUser().getId().equals(user.getId()))
             throw new IllegalArgumentException("작성자가 아니라 게시글을 수정 할 수 없습니다.");
-
+        String tagname = photoBoardRequestDto.getTagname();
+        Tag tag = tagRepository.findByTagname(tagname);
+        if(tag == null) {
+            tagRepository.save(Tag.builder()
+                    .tagname(tagname)
+                    .build());
+        }
         modifiedBoard.update(photoBoardRequestDto);
 
         photoBoardRepository.save(modifiedBoard);
