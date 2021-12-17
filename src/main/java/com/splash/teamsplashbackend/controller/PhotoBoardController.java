@@ -31,12 +31,12 @@ public class PhotoBoardController {
 
     @ApiOperation(value = "사진 게시물 수정")
     @PutMapping("/api/board/edit/{id}")
-    public void photoBoardEdit(
+    public PhotoBoardResponseDto photoBoardEdit(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
             @RequestBody PhotoBoardRequestDto photoBoardRequestDto
     ) {
-        photoBoardService.editPhotoBoard(id,photoBoardRequestDto, userDetails.getUser());
+        return photoBoardService.editPhotoBoard(id,photoBoardRequestDto, userDetails.getUser());
     }
 
     @ApiOperation(value = "전체 게시글 조회")
