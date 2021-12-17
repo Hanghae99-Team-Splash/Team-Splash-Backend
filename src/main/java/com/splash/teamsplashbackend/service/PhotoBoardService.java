@@ -5,9 +5,11 @@ import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardRequestDto;
 import com.splash.teamsplashbackend.dto.photoBoard.PhotoBoardResponseDto;
 import com.splash.teamsplashbackend.model.Likes;
 import com.splash.teamsplashbackend.model.PhotoBoard;
+import com.splash.teamsplashbackend.model.Tag;
 import com.splash.teamsplashbackend.model.User;
 import com.splash.teamsplashbackend.repository.LikeRepository;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
+import com.splash.teamsplashbackend.repository.TagRepository;
 import com.splash.teamsplashbackend.utils.TimeCalculator;
 import com.splash.teamsplashbackend.validator.PhotoBoardValidator;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 public class PhotoBoardService {
     private final PhotoBoardRepository photoBoardRepository;
     private final LikeRepository likeRepository;
+    private final TagRepository tagRepository;
 //    private final S3Uploader s3Uploader;
 
 //    private final String imageDirName = "static";
@@ -44,6 +47,12 @@ public class PhotoBoardService {
 //        String imageUrl = s3Uploader.upload(multipartFile, imageDirName);
 
         PhotoBoardValidator.photoBoardCheckIsEmpty(location, description, tagname);
+        Tag tag = tagRepository.findByTagname(tagname);
+        if(tag == null) {
+            tagRepository.save(Tag.builder()
+                    .tagname(tagname)
+                    .build());
+        }
         PhotoBoard post = PhotoBoard.builder()
                         .img("https://images.unsplash.com/photo-1639353434411-088270055340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80")
                         .location(location)
