@@ -2,7 +2,7 @@
 📆2021.12.13 ~ 2021.12.18
 </br>
 
-### Splash
+# Team Splash
 웹사이트 unsplash 클론 코딩 =>
 <a href="https://unsplash.com/">Unsplash 웹사이트</a>  
 
