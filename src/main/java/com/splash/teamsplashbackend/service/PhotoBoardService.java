@@ -182,7 +182,7 @@ public class PhotoBoardService {
     }
     //endregion
 
-    // 유저가 쓴 게시물 목록 가져오기 메소드
+    //region 유저가 쓴 게시물 목록 가져오기 메소드
     @Transactional
     public List<PhotoBoardResponseDto> findUserBoardList(
             @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -195,8 +195,9 @@ public class PhotoBoardService {
         return photoBoardResponseDtos;
 
     }
+    //endregion
 
-    // 유저가 좋아요 한 목록 가져오기 메소드
+    //region 유저가 좋아요 한 목록 가져오기 메소드
     @Transactional
     public List<PhotoBoardResponseDto> findUserLikePhotoBoardList(
             @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -214,7 +215,7 @@ public class PhotoBoardService {
         }
         return photoBoardResponseDtos;
     }
-
+    //endregion
 
     private PhotoBoard findPhotoBoardById(
             Long boardId

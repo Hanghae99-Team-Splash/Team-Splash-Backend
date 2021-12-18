@@ -22,7 +22,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    //회원가입처리
+    private final UserValidator userValidator;
+    //region 회원가입처리
     @Transactional
     public String joinProcess(UserRequestDto userRequestDto) {
         String username = userRequestDto.getUsername();
@@ -30,16 +31,18 @@ public class UserService {
         String name = userRequestDto.getName();
         String nickname = userRequestDto.getNickname();
         //회원가입 빈 값 금지
-        UserValidator.checkIsEmpty(username, password, name, nickname);
+        userValidator.checkIsEmpty(username, password, name, nickname);
         Optional<User>foundEmail = userRepository.findByUsername(username);
         //이메일 중복검사
-        UserValidator.checkEmail(foundEmail);
-        password = passwordEncoder.encode(userRequestDto.getPassword());
-        User user = new User(username, password, name, nickname);
+        userValidator.checkEmail(foundEmail);
+        String encodedPassword = passwordEncoder.encode(userRequestDto.getPassword());
+        User user = new User(username, encodedPassword, name, nickname);
         userRepository.save(user);
         return "Success Join";
     }
-    //로그인 처리
+    //endregion
+
+    //region 로그인 처리
     public UserResponseDto loginProcess(UserRequestDto requestDto, HttpServletResponse response) {
         User user = userRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 username 입니다."));
@@ -52,6 +55,6 @@ public class UserService {
                 .userId(user.getId())
                 .build();
     }
-
+    //endregion
 
 }

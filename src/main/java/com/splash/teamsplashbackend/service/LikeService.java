@@ -20,7 +20,7 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final PhotoBoardRepository photoBoardRepository;
 
-    //좋아요
+    //region 좋아요
     @Transactional
     public String clickLike(UserDetailsImpl userDetails, Long boardId) {
         Long userId = userDetails.getUser().getId();
@@ -36,6 +36,9 @@ public class LikeService {
             return "Success Like On";
         }
     }
+    //endregion
+
+    //region 한 게시물에 좋아요 누른 유저들의 아이디 값 받아오기
     @Transactional
     public LikesResponseDto getOnePostingLikesUserIds(@PathVariable Long boardId) {
         List<Likes> likesList = likeRepository.findAllByBoardId(boardId);
@@ -47,6 +50,6 @@ public class LikeService {
                 .userIds(userIds)
                 .build();
     }
-
+    //endregion
 
 }
