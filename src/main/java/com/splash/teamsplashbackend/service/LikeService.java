@@ -4,14 +4,11 @@ package com.splash.teamsplashbackend.service;
 import com.splash.teamsplashbackend.config.UserDetailsImpl;
 import com.splash.teamsplashbackend.dto.likes.LikesResponseDto;
 import com.splash.teamsplashbackend.model.Likes;
-import com.splash.teamsplashbackend.model.PhotoBoard;
 import com.splash.teamsplashbackend.repository.LikeRepository;
 import com.splash.teamsplashbackend.repository.PhotoBoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
