@@ -22,18 +22,23 @@ import java.util.List;
 public class TagService {
     private final TagRepository tagRepository;
     private final PhotoBoardRepository photoBoardRepository;
-    //태그 저장
+    private final TagValidator tagValidator;
+    //region 태그 저장
     @Transactional
     public void saveTag(TagRequestDto tagRequestDto) {
         List<Tag> tags = tagRepository.findAll();
-        TagValidator.checkTagName(tagRequestDto, tags);
+        tagValidator.checkTagName(tagRequestDto, tags);
         tagRepository.save(new Tag(tagRequestDto.getTagname()));
     }
+    //endregion
 
-    //태그 해당하는 게시물들 가져오기
+    //region 태그 해당하는 게시물들 가져오기
     @Transactional
     public TagResponseDto takeSpecificTagBoards(String tagname) {
         List<Tag> tags = tagRepository.findAll();
+        if(tags.size()==0) {
+            throw new NullPointerException("조회할 게시글이 없습니다.");
+        }
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         HashMap<String,List<PhotoBoardResponseDto>> tagMap = new HashMap<>();
         for(Tag tag : tags) {
@@ -50,6 +55,6 @@ public class TagService {
                 .photoboards(tagMap.get(tagname))
                 .build();
     }
-
+    //endregion
 
 }

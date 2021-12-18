@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserValidator {
     //이메일 중복검사
-    public static void checkEmail(Optional<User> foundEmail) {
+    public void checkEmail(Optional<User> foundEmail) {
         if(foundEmail.isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다");
         }
     }
-    public static void checkIsEmpty(String username, String password, String name, String nickname) {
+    public void checkIsEmpty(String username, String password, String name, String nickname) {
         if(username.isEmpty()) {
             throw new IllegalArgumentException("이메일은 필수 입력 값입니다");
         }
