@@ -10,7 +10,6 @@ import java.util.Optional;
 
 
 @Component
-@RequiredArgsConstructor
 public class UserValidator {
     //이메일 중복검사
     public void checkEmail(Optional<User> foundEmail) {
