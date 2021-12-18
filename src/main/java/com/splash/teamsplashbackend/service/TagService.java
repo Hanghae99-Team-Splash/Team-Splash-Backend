@@ -36,9 +36,7 @@ public class TagService {
     @Transactional
     public TagResponseDto takeSpecificTagBoards(String tagname) {
         List<Tag> tags = tagRepository.findAll();
-        if(tags.size()==0) {
-            throw new NullPointerException("조회할 게시글이 없습니다.");
-        }
+
         List<PhotoBoardResponseDto> photoBoardResponseDtos = new ArrayList<>();
         HashMap<String,List<PhotoBoardResponseDto>> tagMap = new HashMap<>();
         for(Tag tag : tags) {
