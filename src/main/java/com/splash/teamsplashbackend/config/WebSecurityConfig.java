@@ -64,7 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/kakao/callback/**").permitAll()
                 .antMatchers("/api/board/**").permitAll()
                 .antMatchers("/api/tag/**").permitAll()
                 .antMatchers("/api/main").permitAll()
