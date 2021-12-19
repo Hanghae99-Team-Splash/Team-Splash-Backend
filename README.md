@@ -36,7 +36,7 @@
 
 ## 🎞프로젝트 시연 영상🎞
 
-<a href="https://www.youtube.com/watch?v=7NqR7eWZ1Hw"> 유튜브 시연 영상</a>
+<a href="https://www.youtube.com/watch?v=7NqR7eWZ1Hw">시연 영상 링크(유튜브)</a>
 
 
 </br>
