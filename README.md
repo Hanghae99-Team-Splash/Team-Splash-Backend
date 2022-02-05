@@ -12,8 +12,8 @@
 ## 구성원 및 역할👫
 
 ### **Front-end**
-- 정주혜:
-- 이준명:
+- 정주혜
+- 이준명
 
 프론트 깃헙 링크 => 
 <a href="https://github.com/Hanghae99-Team-Splash/Team-Splash-Frontend">바로가기</a>
